@@ -1,1 +1,1 @@
-# prognosis
+# prognosys
