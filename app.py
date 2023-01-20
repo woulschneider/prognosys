@@ -1,13 +1,19 @@
 from flask import Flask, render_template, request, redirect, url_for
 import os
+from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
-from models.patients import Base, Patient
+from models.patients import Patient, Diagnostics, db
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db.sqlite'
-db = SQLAlchemy(app)
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://nfummyjq:pO6jnSAUV3byLm0n6-IWdTkTiqS-DXRk@kesavan.db.elephantsql.com/nfummyjq'
 
-db.create_all()
+migrate = Migrate(app, db)
+#db = SQLAlchemy(app)
+with app.app_context():
+        db.init_app(app)
+
+        db.create_all()
+
 
 @app.route('/')
 def index():

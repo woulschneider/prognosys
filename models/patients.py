@@ -1,6 +1,9 @@
+from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import Column, Integer, String, Date, TIMESTAMP, ForeignKey
 from flask_sqlalchemy import SQLAlchemy
 import datetime
+
+db = SQLAlchemy()
 
 
 
