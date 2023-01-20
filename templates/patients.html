@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Patients</title>
+</head>
+<body>
+    <h1>Patient Menu</h1>
+    <table>
+        <tr>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Gender</th>
+            <th>Date of Birth</th>
+            <th>Phone Number</th>
+            <th>CPF</th>
+            <th>Street Address</th>
+            <th>City</th>
+            <th>CEP</th>
+            <th>Actions</th>
+        </tr>
+        {% for patient in patients %}
+        <tr>
+            <td>{{patient.first_name}}</td>
+            <td>{{patient.last_name}}</td>
+            <td>{{patient.gender}}</td>
+            <td>{{patient.date_of_birth}}</td>
+            <td>{{patient.phone_number}}</td>
+            <td>{{patient.cpf}}</td>
+            <td>{{patient.street_address}}</td>
+            <td>{{patient.city}}</td>
+            <td>{{patient.cep}}</td>
+            <td>    
+                <a href="{{url_for('patient', patient_id=patient.id)}}">View</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+    <form action="{{url_for('patients')}}" method="POST">
+        <label for="first_name">First Name:</label>
+        <input type="text" id="first_name" name="first_name"><br>
+        <label for="last_name">Last Name:</label>
+        <input type="text" id="last_name" name="last_name"><br>
+        <label for="gender">Gender:</label>
+        <input type="text" id="gender" name="gender"><br>
+        <label for="dob">Date of Birth:</label>
+        <input type="date" id="dob" name="dob"><br>
+        <label for="phone">Phone Number:</label>
+        <input type="tel" id="phone" name="phone"><br>
+        <label for="cpf">CPF:</label>
+        <input type="text" id="cpf" name="cpf"><br>
+        <label for="address">Address:</label>
+        <input type="text" id="address" name="address"><br>
+        <label for="city">City:</label>
+        <input type="text" id="city" name="city"><br>
+        <label for="cep">CEP:</label>
+        <input type="text" id="cep" name="cep"><br>
+        <input type="submit" value="Add Patient">
+</form>
+</body>
+</html>
