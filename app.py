@@ -1,8 +1,8 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, flash
 import os
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
-from models.patients import Patient, Diagnostics, db
+from models.patients import Patient, db
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://nfummyjq:pO6jnSAUV3byLm0n6-IWdTkTiqS-DXRk@kesavan.db.elephantsql.com/nfummyjq'
@@ -51,13 +51,34 @@ def patient(patient_id):
             patient.city = request.form['city']
             patient.cep = request.form['cep']
             db.session.commit()
-        elif request.form.get('delete'):
-            patient = Patient.query.filter_by(id=patient_id).first()
-            db.session.delete(patient)
-            db.session.commit()
-            return redirect(url_for('patients'))
     patient = Patient.query.filter_by(id=patient_id).first()
     return render_template('patient.html', patient=patient)
+
+@app.route('/patient/<int:patient_id>/delete', methods=['GET', 'DELETE'])
+def delete_patient(patient_id):
+    patient = Patient.query.filter_by(id=patient_id).first()
+    db.session.delete(patient)
+    db.session.commit()
+    return redirect(url_for('patients'))
+
+@app.route('/patients/<int:patient_id>/edit', methods=['GET', 'POST'])
+def edit_patient(patient_id):
+    patient = Patient.query.get(patient_id)
+    if request.method == 'POST':
+        patient.first_name = request.form['first_name']
+        patient.last_name = request.form['last_name']
+        patient.gender = request.form['gender']
+        patient.date_of_birth = request.form['date_of_birth']
+        patient.phone_number = request.form['phone_number']
+        patient.cpf = request.form['cpf']
+        patient.street_address = request.form['street_address']
+        patient.city = request.form['city']
+        patient.cep = request.form['cep']
+        db.session.commit()
+        return redirect(url_for('patient', patient_id=patient.id))
+    return render_template('edit_patient.html', patient=patient)
+
+
 
 
 if __name__ == '__main__':

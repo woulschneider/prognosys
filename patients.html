@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Patients</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="text-center">Patient Menu</h1>
+        <table class="table mt-5">
+            <thead class="thead-light">
+                <tr>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Gender</th>
+                    <th>Date of Birth</th>
+                    <th>Phone Number</th>
+                    <th>CPF</th>
+                    <th>Street Address</th>
+                    <th>City</th>
+                    <th>CEP</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for patient in patients %}
+                <tr>
+                    <td>{{patient.first_name}}</td>
+                    <td>{{patient.last_name}}</td>
+                    <td>{{patient.gender}}</td>
+                    <td>{{patient.date_of_birth}}</td>
+                    <td>{{patient.phone_number}}</td>
+                    <td>{{patient.cpf}}</td>
+                    <td>{{patient.street_address}}</td>
+                    <td>{{patient.city}}</td>
+                    <td>{{patient.cep}}</td>
+                    <td>    
+                        <a href="{{url_for('patient', patient_id=patient.id)}}" class="btn btn-primary btn-sm">View</a>
+                        <a href="{{ url_for('delete_patient', patient_id=patient.id) }}" class="btn btn-danger btn-sm">Delete</a>
+                        <a href="{{ url_for('edit_patient', patient_id=patient.id) }}" class="btn btn-info btn-sm">Edit</a>
+                        </td>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <h2 class="text-center mt-5">Add Patient</h2>
+        <form action="{{url_for('patients')}}" method="POST" class="mt-5">
+            <div class="form-group">
+                <label for="first_name">First Name:</label>
+                <input type="text" class="form-control" id="first_name" name="first_name">
+            </div>
+            <div class="form-group">
+                <label for="last_name">Last Name:</label>
+                <input type="text" class="form-control" id="last_name" name="last_name">
+            </div>
+            <div class="form-group">
+                <label for="gender">Gender:</label>
+                <input type="text" class="form-control" id="gender" name="gender">
+            <div class="form-group">
+                    <label for="dob">Date of Birth:</label>
+                    <input type="date" class="form-control" id="dob" name="dob">
+                </div>
+            <div class="form-group">
+                    <label for="phone">Phone Number:</label>
+                    <input type="tel" class="form-control" id="phone" name="phone">
+                </div>
+            <div class="form-group">
+                    <label for="cpf">CPF:</label>
+                    <input type="text" class="form-control" id="cpf" name="cpf">
+                </div>
+            <div class="form-group">
+                    <label for="address">Address:</label>
+                    <input type="text" class="form-control" id="address" name="address">
+                </div>
+            <div class="form-group">
+                    <label for="city">City:</label>
+                    <input type="text" class="form-control" id="city" name="city">
+                </div>
+            <div class="form-group">
+                    <label for="cep">CEP:</label>
+                    <input type="text" class="form-control" id="cep" name="cep">
+                </div>
+            </div>
+        <input type="submit" value="Add Patient">
+        </form>
+        
+    </body>
+    </html>
