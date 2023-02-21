@@ -4,6 +4,7 @@ from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
 from models.patients import Patient, db
 
+
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://nfummyjq:pO6jnSAUV3byLm0n6-IWdTkTiqS-DXRk@kesavan.db.elephantsql.com/nfummyjq'
 
