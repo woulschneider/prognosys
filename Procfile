@@ -1,1 +1,1 @@
-web: gunicorn prognosys:app
+web: gunicorn app:app
