@@ -2,8 +2,7 @@ from flask import Flask, render_template, request, redirect, url_for, flash
 import os
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
-from models.patients import Patient, db
-
+from models.patients import Patient, db, Diagnostics
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://nfummyjq:pO6jnSAUV3byLm0n6-IWdTkTiqS-DXRk@kesavan.db.elephantsql.com/nfummyjq'
@@ -78,6 +77,22 @@ def edit_patient(patient_id):
         db.session.commit()
         return redirect(url_for('patient', patient_id=patient.id))
     return render_template('edit_patient.html', patient=patient)
+
+
+@app.route('/comments/<int:patient_id>', methods=['GET', 'POST'])
+def comments(patient_id):
+    patient = Patient.query.get(patient_id)
+    diagnostics = Diagnostics.query.filter_by(patient_id=patient_id).all()
+    if request.method == 'POST':
+        comments_text = request.form['comments']
+        diagnostic = Diagnostics(name='Comments', comments=comments_text, patient_id=patient_id)
+        db.session.add(diagnostic)
+        db.session.commit()
+        
+    return render_template('comments.html', patient=patient, diagnostics=diagnostics)
+
+
+   
 
 
 

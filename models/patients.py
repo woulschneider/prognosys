@@ -26,5 +26,5 @@ class Diagnostics(db.Model):
     __tablename__ = 'diagnostics'
     id = Column(Integer, primary_key=True)
     name = Column(String, nullable=False)
+    comments = Column(String, nullable=True)
     patient_id = Column(Integer, ForeignKey('patients.id'), nullable=False)
-
